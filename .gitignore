@@ -1,0 +1,20 @@
+/.idea
+/.gradle
+/build
+.DS_Store
+/*.iml
+/*.ipr
+/*.iws
+/*.log
+/out
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+.DS_Store
+
