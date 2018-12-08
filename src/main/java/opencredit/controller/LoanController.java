@@ -1,10 +1,8 @@
 package opencredit.controller;
 
-import opencredit.model.LoanModel;
-import opencredit.model.BasicInfo;
-import opencredit.repository.LoanModelRepository;
-import opencredit.repository.BasicInfoRepository;
-
+import opencredit.data.*;
+import opencredit.model.*;
+import opencredit.repository.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +35,9 @@ public class LoanController {
     @Autowired
     LoanModelRepository loanModelRepository;
 
+    @Autowired
+    LoanHistoryRepository loanHistoryRepository;
+
     @GetMapping(value = "/{identfication}/basicInfo", produces = "application/json")
     public ResponseEntity<BasicInfo> getLoanModel(@PathVariable("identfication") String identfication) {
         logger.info("===== 連接政府API取得" + identfication + "基本資料中... =====");
@@ -45,24 +46,55 @@ public class LoanController {
         	logger.info("===== 找不到" + identfication + "的基本資料 =====");
         	return new ResponseEntity<>(basicInfo, HttpStatus.OK);
         }
-        logger.info("===== " + basicInfo + " =====");
-        logger.info("===== 回傳以上個人基本資料 =====");
+        for (Bank bank: basicInfo.getBankList()) {
+            logger.info("===== 連接銀行API取得" + bank.getBankName() + "資料料中... =====");
+        }
         return new ResponseEntity<>(basicInfo, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{userId}/loan_model", produces = "application/json")
-    public ResponseEntity<List<LoanModel>> getLoanModel() {
+    @GetMapping(value = "/{identfication}/loanHistory", produces = "application/json")
+    public ResponseEntity<LoanData> getLoanHistory(@PathVariable("identfication") String identfication) {
+        List<LoanHistory> loanHistorys = loanHistoryRepository.findByIdentification(identfication);
+        if (loanHistorys.isEmpty()) {
+        	logger.info("===== 找不到" + identfication + "貸款資料 =====");
+        	return new ResponseEntity<>(new LoanData(), HttpStatus.OK);
+        }
+        for (LoanHistory loanHistory: loanHistorys) {
+            logger.info("===== 貸款資料:" + loanHistory.getBank() + loanHistory.getProduct() + " =====");
+        }
+        LoanData loanData = new LoanData(loanHistorys);
+        return new ResponseEntity<>(loanData, HttpStatus.OK);
+    }
+
+    // @GetMapping(value = "/{identfication}/creditcard", produces = "application/json")
+    // public ResponseEntity<List<Creditcard>> getLoanModel(@PathVariable("identfication") String identfication) {
+    //     BasicInfo basicInfo = basicInfoRepository.findByIdentification(identfication);
+    //     if (basicInfo == null) {
+    //     	logger.info("===== 找不到" + identfication + "的基本資料 =====");
+    //     	return new ResponseEntity<>(basicInfo, HttpStatus.OK);
+    //     }
+    //     logger.info("===== " + basicInfo + " =====");
+    //     logger.info("===== 收集以上個人基本資料 =====");
+    //     for (Bank bank: basicInfo.getBankList()) {
+    //         logger.info("===== 連接銀行API取得" + bank.getBankName() + "資料料中... =====");
+    //     }
+    //     return new ResponseEntity<>(basicInfo, HttpStatus.OK);
+    // }
+
+    @GetMapping(value = "/{userId}/loanModel", produces = "application/json")
+    public ResponseEntity<LoanModelList> getLoanModel() {
         logger.info("===== 資料庫提取借貸方案中... =====");
         List<LoanModel> loanModels = loanModelRepository.findByType("vip");
         if (loanModels.isEmpty()) {
         	logger.info("===== 搜尋不到適合的借貸方案 =====");
-        	return new ResponseEntity<>(loanModels, HttpStatus.OK);
+        	return new ResponseEntity<>(new LoanModelList(), HttpStatus.OK);
         }
-        for (LoanModel l: loanModels) {
-            logger.info("===== " + l.getProduct() + " =====");
+        for (LoanModel loanModel: loanModels) {
+            logger.info("===== " + loanModel.getProduct() + " =====");
         }
         logger.info("===== 回傳以上適合的借貸方案 =====");
-        return new ResponseEntity<>(loanModels, HttpStatus.OK);
+        LoanModelList loanModelList = new LoanModelList(loanModels);
+        return new ResponseEntity<>(loanModelList, HttpStatus.OK);
     }
 
 //     @PostMapping(value = "/{userId}/add_item_to_shoppingist", produces = "application/json")
