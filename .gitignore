@@ -7,6 +7,7 @@
 /*.iws
 /*.log
 /out
+/bin
 
 ### STS ###
 .apt_generated
