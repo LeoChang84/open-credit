@@ -219,4 +219,15 @@ public class LoanController {
         String reply = "Recieve data" ;
         return new ResponseEntity<>(reply, HttpStatus.OK);
     }
+
+    @PostMapping(value = "/{identfication}/modifyLoanStatus", produces = "application/json")
+    public ResponseEntity<String> postLoanStatus(@RequestBody String loanRequest) throws JsonGenerationException, JsonMappingException, IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        LoanHistory loanHistory = objectMapper.readValue(loanRequest, LoanHistory.class);
+        logger.info("===== 已批准/拒絕" + loanHistory.getIdentification() + loanHistory.getLoanModel().getProduct() + "的信用申請 =====");
+        loanHistoryRepository.save(loanHistory);
+        String reply = "Modified data" ;
+        return new ResponseEntity<>(reply, HttpStatus.OK);
+    }
 }

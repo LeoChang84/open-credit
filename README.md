@@ -206,3 +206,38 @@ Then, you would get the result like the following:
 ```
 Recieve data
 ```
+
+### Approve/Reject loan by bank
+
+```
+curl --header "Content-Type: application/json" --request POST --data \
+'{
+    "identification": "A123456789",
+    "loanModel": {
+        "product": "渣打銀行限時優惠信貸專案",
+        "bank": "渣打銀行",
+        "image":"https://upload.wikimedia.org/wikipedia/zh/thumb/a/a9/Standard_Chartered_Bank.svg/1200px-Standard_Chartered_Bank.svg.png",
+        "apr": 3.35,
+        "fee": 4000,
+        "returnPrice": 4175,
+        "rate": 96.9,
+        "type": "normal"
+    },
+    "totalPrice": 600000,
+    "repayStaging": 0,
+    "staging": 5,
+    "startDate": "20181212",
+    "endDate": "20240112",    
+    "repaymentDateOfMonth": 15,
+    "repayRate": 1,
+    "commentFromBank": "",
+    "due": "false",
+    "status": "reject"
+}' https://open-credit.herokuapp.com/loan/A123456789/applyLoan
+```
+
+Then, you would get the result like the following:
+
+```
+Modified data
+```
