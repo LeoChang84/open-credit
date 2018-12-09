@@ -58,17 +58,30 @@ Then, you would get the result like the following:
 {"banks":[{"bankName":"上海商銀"},{"bankName":"王道銀行"},{"bankName":"渣打銀行"},{"bankName":"匯豐銀行"},{"bankName":"中國信託"}]}
 ```
 
-### Get loan history of user
+### Get approved loan history of user
 
 ```
-curl -X GET "https://open-credit.herokuapp.com/loan/A123456789/loanHistory"
+curl -X GET "https://open-credit.herokuapp.com/loan/A123456789/loanHistoryApproved"
 ```
 
 Then, you would get the result like the following:
 
 ```
-{"loanHistorys":[{"identification":"A123456789","bank":"王道銀行","product":"王道銀行 科學園區獨享貸","apr":2.69,"fee":88,"returnPrice":10997,"totalPrice":500000,"repayStaging":10,"staging":24,"startDate":"20180215","endDate":"20190315","repaymentDateOfMonth":"15","repayRate":1.0,"commentFromBank":"","due":null},{"identification":"A123456789","bank":"上海商銀","product":"上海銀行 優利貸","apr":3.2,"fee":2000,"returnPrice":null,"totalPrice":600000,"repayStaging":69,"staging":72,"startDate":"20160111","endDate":"20190211","repaymentDateOfMonth":"11","repayRate":1.0,"commentFromBank":"Great customer","due":null},{"identification":"A123456789","bank":"匯豐銀行","product":"滙豐銀行 閃光0.1%專案","apr":2.86,"fee":3000,"returnPrice":4176,"totalPrice":50000,"repayStaging":1,"staging":6,"startDate":"201801119","endDate":"20190519","repaymentDateOfMonth":"19","repayRate":1.0,"commentFromBank":"","due":null}]}
+{"loanHistorys":[{"identification":"A123456789","loanModel":{"product":"渣打銀行限時優惠信貸專案","bank":"渣打銀行","image":"https://upload.wikimedia.org/wikipedia/zh/thumb/a/a9/Standard_Chartered_Bank.svg/1200px-Standard_Chartered_Bank.svg.png","apr":3.35,"fee":4000,"returnPrice":4175,"rate":96.9,"type":"normal"},"totalPrice":600000,"repayStaging":0,"staging":5,"startDate":"20181212","endDate":"20240112","repaymentDateOfMonth":"15","repayRate":1.0,"commentFromBank":"","due":false,"status":"approved"},{"identification":"A123456789","loanModel":{"product":"王道銀行科學園區獨享貸","bank":"王道銀行","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/O-Bank_logo.svg/1200px-O-Bank_logo.svg.png","apr":2.69,"fee":88,"returnPrice":10997,"rate":96.9,"type":"normal"},"totalPrice":500000,"repayStaging":0,"staging":2,"startDate":"20180215","endDate":"20190315","repaymentDateOfMonth":"7","repayRate":1.0,"commentFromBank":"","due":false,"status":"approved"},{"identification":"A123456789","loanModel":{"product":"上海銀行優利貸","bank":"上海商銀","image":"https://upload.wikimedia.org/wikipedia/zh/thumb/6/64/Shanghai_Commercial_and_Savings_Bank.svg/600px-Shanghai_Commercial_and_Savings_Bank.svg.png?fbclid=IwAR21gV1zbkUwkwJ2n5L1PN7QJpnoxUIpsIG5m7HleEo10kGtpm0V2itM3X0","apr":3.2,"fee":2000,"returnPrice":11082,"rate":96.9,"type":"normal"},"totalPrice":600000,"repayStaging":3,"staging":3,"startDate":"20110111","endDate":"20140211","repaymentDateOfMonth":"11","repayRate":1.0,"commentFromBank":"Great customer","due":true,"status":"approved"},{"identification":"A123456789","loanModel":{"product":"滙豐銀行閃光0.1%專案","bank":"匯豐銀行","image":"https://q-fa.bstatic.com/xdata/images/xphoto/1236x412/34604175.jpg?k=6b4819825ec6fed42ff8d9af5e0271d349312e4368d835502db8eeb7e7fe9a7f&o=","apr":2.86,"fee":3000,"returnPrice":4176,"rate":96.9,"type":"normal"},"totalPrice":50000,"repayStaging":1,"staging":2,"startDate":"201801119","endDate":"20191219","repaymentDateOfMonth":"11","repayRate":1.0,"commentFromBank":"","due":false,"status":"approved"}]}
 ```
+
+### Get approved loan history of user
+
+```
+curl -X GET "https://open-credit.herokuapp.com/loan/A123456789/loanHistoryPending"
+```
+
+Then, you would get the result like the following:
+
+```
+{"loanHistorys":[{"identification":"A123456789","loanModel":{"product":"上海銀行優利貸","bank":"上海商銀","image":"https://upload.wikimedia.org/wikipedia/zh/thumb/6/64/Shanghai_Commercial_and_Savings_Bank.svg/600px-Shanghai_Commercial_and_Savings_Bank.svg.png?fbclid=IwAR21gV1zbkUwkwJ2n5L1PN7QJpnoxUIpsIG5m7HleEo10kGtpm0V2itM3X0","apr":3.2,"fee":2000,"returnPrice":11082,"rate":96.9,"type":"normal"},"totalPrice":500000,"repayStaging":0,"staging":3,"startDate":"20181211","endDate":"20210111","repaymentDateOfMonth":"11","repayRate":1.0,"commentFromBank":"","due":false,"status":"pending"}]}
+```
+
 
 ### Get creditcard history of user
 

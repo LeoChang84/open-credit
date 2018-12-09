@@ -59,9 +59,23 @@ public class LoanController {
         return new ResponseEntity<>(basicInfo, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{identfication}/loanHistory", produces = "application/json")
-    public ResponseEntity<LoanData> getLoanHistory(@PathVariable("identfication") String identfication) {
-        List<LoanHistory> loanHistorys = loanHistoryRepository.findByIdentification(identfication);
+    @GetMapping(value = "/{identfication}/loanHistoryApproved", produces = "application/json")
+    public ResponseEntity<LoanData> getLoanHistoryApproved(@PathVariable("identfication") String identfication) {
+        List<LoanHistory> loanHistorys = loanHistoryRepository.findByIdentificationAndStatus(identfication, "approved");
+        if (loanHistorys.isEmpty()) {
+        	logger.info("===== 找不到" + identfication + "貸款資料 =====");
+        	return new ResponseEntity<>(new LoanData(), HttpStatus.OK);
+        }
+        for (LoanHistory loanHistory: loanHistorys) {
+            logger.info("===== 貸款資料:" + loanHistory.getLoanModel().getBank() + loanHistory.getLoanModel().getProduct() + " =====");
+        }
+        LoanData loanData = new LoanData(loanHistorys);
+        return new ResponseEntity<>(loanData, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{identfication}/loanHistoryPending", produces = "application/json")
+    public ResponseEntity<LoanData> getLoanHistoryPending(@PathVariable("identfication") String identfication) {
+        List<LoanHistory> loanHistorys = loanHistoryRepository.findByIdentificationAndStatus(identfication, "pending");
         if (loanHistorys.isEmpty()) {
         	logger.info("===== 找不到" + identfication + "貸款資料 =====");
         	return new ResponseEntity<>(new LoanData(), HttpStatus.OK);
