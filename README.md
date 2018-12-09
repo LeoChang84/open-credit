@@ -112,7 +112,7 @@ Then, you would get the result like the following:
 ### Get deposite of user
 
 ```
-curl -X GET "https://open-credit.herokuapp.com/loan/A123456789/depostie"
+curl -X GET "https://open-credit.herokuapp.com/loan/A123456789/deposite"
 ```
 
 Then, you would get the result like the following:
@@ -163,8 +163,11 @@ Then, you would get the result like the following:
 ### Pre calculate loan table for user
 
 ```
-curl -X GET "https://open-credit.herokuapp.com/loan/perCalculateLoan?product=中國信託Online貸&loanPrice=600000&stage=5
+curl -X GET "https://open-credit.herokuapp.com/loan/perCalculateLoan?product=中國信託Online貸&loanPrice=600000&stage=5"
 ```
+
+Then, you would get the result like the following:
+
 ```
 {"product":"中國信託Online貸","preCalculateList":[{"stage":0,"loanBalance":600000,"principal":0,"interest":0,"payment":10791},{"stage":1,"loanBalance":590729,"principal":9271,"interest":1520,"payment":10791},{"stage":2,"loanBalance":581435,"principal":9294,"interest":1497,"payment":10791}
 ...
@@ -233,7 +236,7 @@ curl --header "Content-Type: application/json" --request POST --data \
     "commentFromBank": "",
     "due": "false",
     "status": "reject"
-}' https://open-credit.herokuapp.com/loan/A123456789/applyLoan
+}' https://open-credit.herokuapp.com/loan/A123456789/modifyLoanStatus
 ```
 
 Then, you would get the result like the following:

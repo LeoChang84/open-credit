@@ -123,6 +123,7 @@ public class LoanController {
     @GetMapping(value = "/{identfication}/bankCreditcard", produces = "application/json")
     public ResponseEntity<CreditcardData> getCreditDataByBank(@PathVariable("identfication") String identfication, String bank) {
         List<Creditcard> creditcards = creditcardRepository.findByIdentificationAndBank(identfication, bank);
+        logger.info("---------" + bank);
         if (creditcards.isEmpty()) {
         	logger.info("===== 找不到" + identfication + "的信用卡資料 =====");
         	return new ResponseEntity<>(new CreditcardData(), HttpStatus.OK);
