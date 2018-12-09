@@ -2,7 +2,9 @@ package opencredit.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties
 @Document(collection = "loan-model")
 public class LoanModel {
 
@@ -61,6 +63,38 @@ public class LoanModel {
 
     public String getType() {
     	return type;
+    }
+
+    public void setProduct(String product) {
+        this.product = product;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setApr(Float apr) {
+    	this.apr = apr;
+    }
+
+    public void setFee(Integer fee) {
+    	this.fee = fee;
+    }
+
+    public void setReturnPrice(Integer returnPrice) {
+    	this.returnPrice = returnPrice;
+    }
+
+    public void setRate(Float rate) {
+        this.rate = rate;
+    }
+
+    public void setType(String type) {
+    	this.type = type;
     }
 
     public String toString() {

@@ -4,16 +4,23 @@ import opencredit.data.*;
 import opencredit.model.*;
 import opencredit.repository.*;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
-import org.slf4j.Logger;  
-import org.slf4j.LoggerFactory;  
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -149,7 +156,7 @@ public class LoanController {
         return new ResponseEntity<>(depositeSum, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{userId}/loanModel", produces = "application/json")
+    @GetMapping(value = "/{identfication}/loanModel", produces = "application/json")
     public ResponseEntity<LoanModelList> getLoanModel() {
         logger.info("===== 資料庫提取借貸方案中... =====");
         List<LoanModel> loanModels = loanModelRepository.findByType("vip");
@@ -186,5 +193,16 @@ public class LoanController {
             loanPrice -= principal;
         }
         return new ResponseEntity<>(new PreCalculateList(product, preCalculateModels), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/{identfication}/applyLoan", produces = "application/json")
+    public ResponseEntity<String> postLoanRequest(@RequestBody String loanRequest) throws JsonGenerationException, JsonMappingException, IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        LoanHistory loanHistory = objectMapper.readValue(loanRequest, LoanHistory.class);
+        logger.info("===== 已接收到用戶" + loanHistory.getIdentification() + loanHistory.getLoanModel().getProduct() + "的申請資料 =====");
+        loanHistoryRepository.save(loanHistory);
+        String reply = "Recieve data" ;
+        return new ResponseEntity<>(reply, HttpStatus.OK);
     }
 }
