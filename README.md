@@ -58,6 +58,18 @@ Then, you would get the result like the following:
 {"banks":[{"bankName":"上海商銀"},{"bankName":"王道銀行"},{"bankName":"渣打銀行"},{"bankName":"匯豐銀行"},{"bankName":"中國信託"}]}
 ```
 
+### Pre calculate loan table for user
+
+```
+curl -X GET "https://open-credit.herokuapp.com/loan/perCalculateLoan?product=中國信託Online貸&loanPrice=600000&stage=5
+```
+```
+{"product":"中國信託Online貸","preCalculateList":[{"stage":0,"loanBalance":600000,"principal":0,"interest":0,"payment":10791},{"stage":1,"loanBalance":590729,"principal":9271,"interest":1520,"payment":10791},{"stage":2,"loanBalance":581435,"principal":9294,"interest":1497,"payment":10791}
+...
+...
+{"stage":51,"loanBalance":95956,"principal":10521,"interest":270,"payment":10791},{"stage":52,"loanBalance":85408,"principal":10548,"interest":243,"payment":10791},{"stage":53,"loanBalance":74833,"principal":10575,"interest":216,"payment":10791},{"stage":54,"loanBalance":64232,"principal":10601,"interest":190,"payment":10791},{"stage":55,"loanBalance":53604,"principal":10628,"interest":163,"payment":10791},{"stage":56,"loanBalance":42949,"principal":10655,"interest":136,"payment":10791},{"stage":57,"loanBalance":32267,"principal":10682,"interest":109,"payment":10791},{"stage":58,"loanBalance":21558,"principal":10709,"interest":82,"payment":10791},{"stage":59,"loanBalance":10822,"principal":10736,"interest":55,"payment":10791},{"stage":60,"loanBalance":58,"principal":10764,"interest":27,"payment":10791}]}
+```
+
 ### Get loan history of user
 
 ```

@@ -9,11 +9,7 @@ public class LoanHistory {
 	@Id
 	private String id;
     private String identification;
-    private String bank;
-    private String product;
-    private Float apr;
-    private Integer fee;
-    private Integer returnPrice;
+    private LoanModel loanModel;
     private Integer totalPrice;
     private Integer repayStaging;
     private Integer staging;
@@ -23,51 +19,30 @@ public class LoanHistory {
     private Float repayRate;
     private String commentFromBank;
     private Boolean due;
+    private String status;
 
 
-    public LoanHistory (String identification, String bank, String product, Float apr,
-        Integer fee, Integer returnPrice, Integer totalPrice, Integer repayStaging, Integer staging,
-        String startDate, String endDate, String repaymentDateOfMonth, Float repayRate,
-        String commentFromBank, Boolean due) {
+    public LoanHistory (String identification, LoanModel loanModel, Integer totalPrice,
+        Integer repayStaging, Integer staging,String startDate, String endDate, String repaymentDateOfMonth,
+        Float repayRate,String commentFromBank, Boolean due, String status) {
         this.identification = identification;
-        this.bank = bank;
-        this.product = product;
-        this.apr = apr;
-        this.fee = fee;
-        this.returnPrice = returnPrice;
+        this.loanModel = loanModel;
         this.totalPrice = totalPrice;
-        this.repayStaging = repayStaging;
-        this.staging = staging;
         this.startDate = startDate;
         this.endDate = endDate;
         this.repaymentDateOfMonth = repaymentDateOfMonth;
         this.repayRate = repayRate;
         this.commentFromBank = commentFromBank;
         this.due = this.due;
+        this.status = status;
 	}
 
     public String getIdentification() {
         return identification;
     }
 
-    public String getBank() {
-        return bank;
-    }
-
-    public String getProduct() {
-        return product;
-    }
-
-    public Float getApr() {
-        return apr;
-    }
-
-    public Integer getFee() {
-        return fee;
-    }
-
-    public Integer getReturnPrice() {
-        return returnPrice;
+    public LoanModel getLoanModel() {
+        return loanModel;
     }
 
     public Integer getTotalPrice() {
@@ -106,7 +81,11 @@ public class LoanHistory {
         return due;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
     public String toString() {
-        return "[" + product + " " + apr + " " + totalPrice +"]";
+        return "[" + loanModel.getProduct() + " " + loanModel.getApr() + " " + totalPrice + " " + status + "]";
     }
 }

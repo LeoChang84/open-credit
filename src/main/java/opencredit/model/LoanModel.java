@@ -9,6 +9,7 @@ public class LoanModel {
 	@Id
 	private String id;
     private String product;
+    private String bank;
     private String image;
     private Float apr;
     private Integer fee;
@@ -16,9 +17,10 @@ public class LoanModel {
     private Float rate;
     private String type;
 
-    public LoanModel(String product, String image, Float apr, Integer fee, Integer returnPrice,
+    public LoanModel(String product, String bank, String image, Float apr, Integer fee, Integer returnPrice,
            Float rate, String type) {
         this.product = product;
+        this.bank = bank;
         this.image = image;
         this.apr = apr;
         this.fee = fee;
@@ -31,6 +33,10 @@ public class LoanModel {
 	
     public String getProduct() {
         return product;
+    }
+
+    public String getBank() {
+        return bank;
     }
 
     public String getImage() {

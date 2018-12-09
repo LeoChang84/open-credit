@@ -60,7 +60,7 @@ public class LoanController {
         	return new ResponseEntity<>(new LoanData(), HttpStatus.OK);
         }
         for (LoanHistory loanHistory: loanHistorys) {
-            logger.info("===== 貸款資料:" + loanHistory.getBank() + loanHistory.getProduct() + " =====");
+            logger.info("===== 貸款資料:" + loanHistory.getLoanModel().getBank() + loanHistory.getLoanModel().getProduct() + " =====");
         }
         LoanData loanData = new LoanData(loanHistorys);
         return new ResponseEntity<>(loanData, HttpStatus.OK);
@@ -77,9 +77,9 @@ public class LoanController {
         Integer loan = new Integer(0);
         for (LoanHistory loanHistory: loanHistorys) {
             if (Integer.valueOf(loanHistory.getRepaymentDateOfMonth()) <= Integer.valueOf(date) % 1000000) {
-                loan += Integer.valueOf(loanHistory.getReturnPrice());
+                loan += Integer.valueOf(loanHistory.getLoanModel().getReturnPrice());
             }
-            logger.info("===== 貸款資料:" + loanHistory.getBank() + loanHistory.getProduct() + " =====");
+            logger.info("===== 貸款資料:" + loanHistory.getLoanModel().getBank() + loanHistory.getLoanModel().getProduct() + " =====");
         }
         return new ResponseEntity<>(loan, HttpStatus.OK);
     }
@@ -109,7 +109,6 @@ public class LoanController {
         return new ResponseEntity<>(new CreditcardData(creditcards), HttpStatus.OK);
     }
 
-
     @GetMapping(value = "/{identfication}/creditcard", produces = "application/json")
     public ResponseEntity<CreditcardData> getCreditData(@PathVariable("identfication") String identfication) {
         List<Creditcard> creditcards = creditcardRepository.findByIdentification(identfication);
@@ -117,6 +116,7 @@ public class LoanController {
         	logger.info("===== 找不到" + identfication + "的信用卡資料 =====");
         	return new ResponseEntity<>(new CreditcardData(), HttpStatus.OK);
         }
+        logger.info("===== 搜尋" + identfication + "的信用卡資料 =====");
         return new ResponseEntity<>(new CreditcardData(creditcards), HttpStatus.OK);
     }
 
@@ -127,7 +127,6 @@ public class LoanController {
         	logger.info("===== 找不到" + identfication + "的存款帳戶資料 =====");
         	return new ResponseEntity<>(new Integer(0), HttpStatus.OK);
         }
-        logger.info("===== 搜尋" + identfication + "的存款帳戶資料 =====")
         Integer depositeSum = new Integer(0);
         for (Deposite deposite: deposites) {
             depositeSum += deposite.getDepostiePrice();
@@ -142,7 +141,7 @@ public class LoanController {
         	logger.info("===== 找不到" + identfication + "的存款帳戶資料 =====");
         	return new ResponseEntity<>(new Integer(0), HttpStatus.OK);
         }
-        logger.info("===== 搜尋" + identfication + "的" + bank + "存款資料 =====")
+        logger.info("===== 搜尋" + identfication + "的" + bank + "存款資料 =====");
         Integer depositeSum = new Integer(0);
         for (Deposite deposite: deposites) {
             depositeSum += deposite.getDepostiePrice();
@@ -164,5 +163,28 @@ public class LoanController {
         logger.info("===== 回傳以上適合的借貸方案 =====");
         LoanModelList loanModelList = new LoanModelList(loanModels);
         return new ResponseEntity<>(loanModelList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/perCalculateLoan", produces = "application/json")
+    public ResponseEntity<PreCalculateList> getPreCalculateLoan(String product, Integer loanPrice, Integer stage) {
+        LoanModel loanModel = loanModelRepository.findByProduct(product);
+        logger.info(product + String.valueOf(loanPrice) + " " + String.valueOf(stage));
+        if (loanModel == null) {
+        	logger.info("===== 找不到您指定的" + product + "的資料 =====");
+        	return new ResponseEntity<>(new PreCalculateList(), HttpStatus.OK);
+        }
+        logger.info("===== 計算" + product + ":" + "貸款" + String.valueOf(loanPrice) + " " + loanModel.getApr() + "利率 =====");
+        List<PreCalculateModel> preCalculateModels = new ArrayList<>();
+        float mir = (loanModel.getApr() / 100 / 12);
+        int repayment = (int)(long)((loanPrice * mir) / (1 - 1 / Math.pow((1 + mir), stage * 12) ));
+        int principal = 0;
+        int interest = 0;
+        for (int i = 0; i <= 12 * stage; i++) {
+            preCalculateModels.add(new PreCalculateModel(i, loanPrice, principal, interest, repayment));
+            interest = Math.round(loanPrice * mir);
+            principal = repayment - interest;
+            loanPrice -= principal;
+        }
+        return new ResponseEntity<>(new PreCalculateList(product, preCalculateModels), HttpStatus.OK);
     }
 }
