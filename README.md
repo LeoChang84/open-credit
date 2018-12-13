@@ -82,6 +82,17 @@ Then, you would get the result like the following:
 {"loanHistorys":[{"identification":"A123456789","loanModel":{"product":"上海銀行優利貸","bank":"上海商銀","image":"https://upload.wikimedia.org/wikipedia/zh/thumb/6/64/Shanghai_Commercial_and_Savings_Bank.svg/600px-Shanghai_Commercial_and_Savings_Bank.svg.png?fbclid=IwAR21gV1zbkUwkwJ2n5L1PN7QJpnoxUIpsIG5m7HleEo10kGtpm0V2itM3X0","apr":3.2,"fee":2000,"returnPrice":11082,"rate":96.9,"type":"normal"},"totalPrice":500000,"repayStaging":0,"staging":3,"startDate":"20181211","endDate":"20210111","repaymentDateOfMonth":"11","repayRate":1.0,"commentFromBank":"","due":false,"status":"pending"}]}
 ```
 
+### Get Due loan history of user
+
+```
+curl -X GET "https://open-credit.herokuapp.com/loan/A123456789/loanHistoryDue"
+```
+
+Then, you would get the result like the following:
+
+```
+{"loanHistorys":[{"identification":"A123456789","loanModel":{"product":"上海銀行優利貸","bank":"上海商銀","image":"https://upload.wikimedia.org/wikipedia/zh/thumb/6/64/Shanghai_Commercial_and_Savings_Bank.svg/600px-Shanghai_Commercial_and_Savings_Bank.svg.png?fbclid=IwAR21gV1zbkUwkwJ2n5L1PN7QJpnoxUIpsIG5m7HleEo10kGtpm0V2itM3X0","apr":3.2,"fee":2000,"returnPrice":11082,"rate":96.9,"type":"normal"},"totalPrice":600000,"repayStaging":3,"staging":3,"startDate":"20110111","endDate":"20140211","repaymentDateOfMonth":"11","repayRate":1.0,"commentFromBank":"Great customer","due":true,"status":"approved"}]}
+```
 
 ### Get creditcard history of user
 

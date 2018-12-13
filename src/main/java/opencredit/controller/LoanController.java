@@ -87,6 +87,20 @@ public class LoanController {
         return new ResponseEntity<>(loanData, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/{identfication}/loanHistoryDue", produces = "application/json")
+    public ResponseEntity<LoanData> getLoanHistoryDue(@PathVariable("identfication") String identfication) {
+        List<LoanHistory> loanHistorys = loanHistoryRepository.findByIdentificationAndDue(identfication, Boolean.TRUE);
+        if (loanHistorys.isEmpty()) {
+        	logger.info("===== 找不到" + identfication + "貸款資料 =====");
+        	return new ResponseEntity<>(new LoanData(), HttpStatus.OK);
+        }
+        for (LoanHistory loanHistory: loanHistorys) {
+            logger.info("===== 貸款歷史資料:" + loanHistory.getLoanModel().getBank() + loanHistory.getLoanModel().getProduct() + " =====");
+        }
+        LoanData loanData = new LoanData(loanHistorys);
+        return new ResponseEntity<>(loanData, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/{identfication}/calculateLoan", produces = "application/json")
     public ResponseEntity<Integer> getLoanHistory(@PathVariable("identfication") String identfication, String date) {
         List<LoanHistory> loanHistorys = loanHistoryRepository.findByIdentification(identfication);

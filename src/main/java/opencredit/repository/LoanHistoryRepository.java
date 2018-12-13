@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface LoanHistoryRepository extends MongoRepository<LoanHistory, String> {
 	public List<LoanHistory> findByIdentificationAndStatus(String identification, String status);
+	public List<LoanHistory> findByIdentificationAndDue(String identification, Boolean due);
 	public List<LoanHistory> findByIdentification(String identification);
 }
