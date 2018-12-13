@@ -70,27 +70,27 @@ Then, you would get the result like the following:
 {"loanHistorys":[{"identification":"A123456789","loanModel":{"product":"渣打銀行限時優惠信貸專案","bank":"渣打銀行","image":"https://upload.wikimedia.org/wikipedia/zh/thumb/a/a9/Standard_Chartered_Bank.svg/1200px-Standard_Chartered_Bank.svg.png","apr":3.35,"fee":4000,"returnPrice":4175,"rate":96.9,"type":"normal"},"totalPrice":600000,"repayStaging":0,"staging":5,"startDate":"20181212","endDate":"20240112","repaymentDateOfMonth":"15","repayRate":1.0,"commentFromBank":"","due":false,"status":"approved"},{"identification":"A123456789","loanModel":{"product":"王道銀行科學園區獨享貸","bank":"王道銀行","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/O-Bank_logo.svg/1200px-O-Bank_logo.svg.png","apr":2.69,"fee":88,"returnPrice":10997,"rate":96.9,"type":"normal"},"totalPrice":500000,"repayStaging":0,"staging":2,"startDate":"20180215","endDate":"20190315","repaymentDateOfMonth":"7","repayRate":1.0,"commentFromBank":"","due":false,"status":"approved"},{"identification":"A123456789","loanModel":{"product":"上海銀行優利貸","bank":"上海商銀","image":"https://upload.wikimedia.org/wikipedia/zh/thumb/6/64/Shanghai_Commercial_and_Savings_Bank.svg/600px-Shanghai_Commercial_and_Savings_Bank.svg.png?fbclid=IwAR21gV1zbkUwkwJ2n5L1PN7QJpnoxUIpsIG5m7HleEo10kGtpm0V2itM3X0","apr":3.2,"fee":2000,"returnPrice":11082,"rate":96.9,"type":"normal"},"totalPrice":600000,"repayStaging":3,"staging":3,"startDate":"20110111","endDate":"20140211","repaymentDateOfMonth":"11","repayRate":1.0,"commentFromBank":"Great customer","due":true,"status":"approved"},{"identification":"A123456789","loanModel":{"product":"滙豐銀行閃光0.1%專案","bank":"匯豐銀行","image":"https://q-fa.bstatic.com/xdata/images/xphoto/1236x412/34604175.jpg?k=6b4819825ec6fed42ff8d9af5e0271d349312e4368d835502db8eeb7e7fe9a7f&o=","apr":2.86,"fee":3000,"returnPrice":4176,"rate":96.9,"type":"normal"},"totalPrice":50000,"repayStaging":1,"staging":2,"startDate":"201801119","endDate":"20191219","repaymentDateOfMonth":"11","repayRate":1.0,"commentFromBank":"","due":false,"status":"approved"}]}
 ```
 
-#### 名詞解釋
+#### 名詞解釋
 
-loanModels: 銀行提供的各項信貸選擇(以下有多個選項皆使用此model)
-product: 銀行信貸名稱
-image: 銀行縮圖
-apr:年利率
-fee:手續費
-returnPrice:最低償還金額
-rate:申辦成功率
-type:適用顧客類型
+* loanModels: 銀行提供的各項信貸選擇(以下有多個選項皆使用此model)
+* product: 銀行信貸名稱
+* image: 銀行縮圖
+* apr:年利率
+* fee:手續費
+* returnPrice:最低償還金額
+* rate:申辦成功率
+* type:適用顧客類型
 
-totalPrice: 申請金額
-repayStaging: 分幾年
-staging: 目前償還到第幾天
-startDate: 信貸開始日期
-endDate: 信貸結束日期
-repaymentDateOfMonth: 每月還款日
-repayRate: 使用者還款率
-commentFromBank: 銀行對使用者評價
-due: 以結束否
-status: 核准與否
+* totalPrice: 申請金額
+* repayStaging: 分幾年
+* staging: 目前償還到第幾天
+* startDate: 信貸開始日期
+* endDate: 信貸結束日期
+* repaymentDateOfMonth: 每月還款日
+* repayRate: 使用者還款率
+* commentFromBank: 銀行對使用者評價
+* due: 以結束否
+* status: 核准與否
 
 
 ### Get approved loan history of user 使用者已被核准的信貸資料
@@ -130,13 +130,13 @@ Then, you would get the result like the following:
 {"creditcards":[{"identification":"A123456789","bank":"上海銀行","card":"現金回饋商務御璽卡","price":1000,"date":"20180709"},{"identification":"A123456789","bank":"上海銀行","card":"現金回饋商務御璽卡","price":190,"date":"201801209"},{"identification":"A123456789","bank":"上海銀行","card":"現金回饋商務御璽卡","price":90,"date":"201801219"},{"identification":"A123456789","bank":"上海銀行","card":"現金回饋商務御璽卡","price":880,"date":"201801203"}]}
 ```
 
-#### 名詞解釋
+#### 名詞解釋
 
-identification: 使用者身分證字號
-bank: 發卡銀行
-card: 卡片種類
-price:消費金額
-date: 消費日期
+* identification: 使用者身分證字號
+* bank: 發卡銀行
+* card: 卡片種類
+* price:消費金額
+* date: 消費日期
 
 ### Get creditcard history of user with specified bank 以銀行來query使用者信用卡紀錄
 
@@ -216,16 +216,18 @@ Then, you would get the result like the following:
 {"stage":51,"loanBalance":95956,"principal":10521,"interest":270,"payment":10791},{"stage":52,"loanBalance":85408,"principal":10548,"interest":243,"payment":10791},{"stage":53,"loanBalance":74833,"principal":10575,"interest":216,"payment":10791},{"stage":54,"loanBalance":64232,"principal":10601,"interest":190,"payment":10791},{"stage":55,"loanBalance":53604,"principal":10628,"interest":163,"payment":10791},{"stage":56,"loanBalance":42949,"principal":10655,"interest":136,"payment":10791},{"stage":57,"loanBalance":32267,"principal":10682,"interest":109,"payment":10791},{"stage":58,"loanBalance":21558,"principal":10709,"interest":82,"payment":10791},{"stage":59,"loanBalance":10822,"principal":10736,"interest":55,"payment":10791},{"stage":60,"loanBalance":58,"principal":10764,"interest":27,"payment":10791}]}
 ```
 
-#### 名詞解釋
 
-步驟: 選擇信貸方案 -> 輸入總金額 -> 輸入欲分期"年數"
+#### 步驟
+* 選擇信貸方案 -> 輸入總金額 -> 輸入欲分期"年數"
 
-preCalculateList: 信貸試算表
-stage: 分繳年數
-loanBalance: 剩餘未繳交金額
-principal: 此次繳交本金
-interest: 此次繳交利息
-payment: 此次須繳交金額
+#### 名詞解釋
+
+* preCalculateList: 信貸試算表
+* stage: 分繳年數
+* loanBalance: 剩餘未繳交金額
+* principal: 此次繳交本金
+* interest: 此次繳交利息
+* payment: 此次須繳交金額
 
 
 ### Apply loan and send to bank 申請信用貸款(試算後點選送出)
